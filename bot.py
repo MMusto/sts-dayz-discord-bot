@@ -2,7 +2,7 @@ import os, asyncio, requests, hashlib
 from discord.ext import commands
 
 TOKEN = os.environ["TOKEN"]
-print(TOKEN, type(TOKEN)
+print(TOKEN, type(TOKEN))
 USER_AGENT	  = os.environ["USER_AGENT"]
 CLIENT_ID	   = os.environ["CLIENT_ID"]
 PLAIN_SECRET	= os.environ["PLAIN_SECRET"]
