@@ -136,7 +136,7 @@ async def apicount(ctx):
 #type = 'voice' or 'text'
 def get_channel(typ : str, chname : str) -> "Channel":
 	'''Helper function that returns Channel object from name snippet'''
-	for server in bot.servers:
+	for server in bot.guilds:
 		if "DayZ" in server.name:
 			for channel in server.channels:
 					if(str(channel.type) == typ):
