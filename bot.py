@@ -123,12 +123,9 @@ async def update_channels():
 @bot.command(pass_context=True)
 async def apicount(ctx):
 	global api_count
-	author = ctx.message.author
-	channel = ctx.message.channel
 	if author.guild_permissions.move_members:
 		#await bot.delete_message(ctx.message)
-		channel = ctx.message.channel
-		await bot.send_message(channel, ">>> # API Calls = {}".format(str(api_count)))
+		await ctx.send(">>> # API Calls = {}".format(str(api_count)), delete_after=5.0)
 		
 ###############################################		 
 #			   HELPER FUNCTIONS			  #
