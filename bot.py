@@ -116,16 +116,16 @@ async def update_channels():
 	current_status_channel = get_channel('voice', 'current status')
 	if players_online_channel == None or current_status_channel == None:
 		print("Error: could not a stat channel")
-	await bot.edit_channel(players_online_channel, name = "Players Online: {}/{}".format(stats['player_count'], stats['max_players']))
+	await players_online_channel.edit(name = "Players Online: {}/{}".format(stats['player_count'], stats['max_players']))
 	status = "ONLINE" if stats['status'] else "OFFLINE"
-	await bot.edit_channel(current_status_channel, name = "Current Status: {}".format(status))
+	await current_status_channel.edit(name = "Current Status: {}".format(status))
 
 @bot.command(pass_context=True)
 async def apicount(ctx):
 	global api_count
 	author = ctx.message.author
 	channel = ctx.message.channel
-	if author.server_permissions.move_members:
+	if author.guild_permissions.move_members:
 		#await bot.delete_message(ctx.message)
 		channel = ctx.message.channel
 		await bot.send_message(channel, ">>> # API Calls = {}".format(str(api_count)))
