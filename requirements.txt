@@ -1,4 +1,4 @@
-git+https://github.com/Rapptz/discord.py#egg=discord.py
+discord.py
 asyncio
 PyNaCl
 requests
