@@ -88,7 +88,7 @@ async def on_ready():
 async def updater():
 	global running
 	global delay
-    global stats
+	global stats
 	running = True
 	
 	await update_stats()
