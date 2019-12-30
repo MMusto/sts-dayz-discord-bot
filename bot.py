@@ -80,7 +80,7 @@ async def on_ready():
 	global running
 	print(bot.user.name)
 	print("**********THE BOT IS READY**********")
-	await bot.change_presence(game=discord.Game(name="Playing DayZ..."))
+	await bot.change_presence(game=discord.Game(status=discord.Status.dnd, activity="Playing DayZ..."))
 	if not running:
 		await updater()
 		running = True
@@ -165,7 +165,7 @@ async def stats(ctx):
 async def setgame(ctx, gam):
 	'''Modify game played by bot is friends list/status bar'''
 	if ctx.message.author.guild_permissions.administrator:
-		await bot.change_presence(game=discord.Game(name=gam))
+		await bot.change_presence(activity=discord.Game(name=gam))
 		
 ###############################################		 
 #			   HELPER FUNCTIONS				  #
