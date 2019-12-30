@@ -167,7 +167,7 @@ async def setgame(ctx, gam):
 	'''Modify game played by bot is friends list/status bar'''
 	if ctx.message.author.guild_permissions.administrator:
 		await bot.change_presence(activity=discord.Game(name=gam))
-    else:
+	else:
 		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 		
 ###############################################		 
