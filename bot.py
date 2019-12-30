@@ -89,7 +89,7 @@ async def updater():
 	global running
 	global api_count
 	global stats
-    global delay
+	global delay
 	running = True
 	
 	request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
@@ -132,22 +132,22 @@ async def apicount(ctx):
 @bot.command(pass_context=True)
 async def stats(ctx):
 	global stats
-    global delay
+	global delay
 	if ctx.message.author.guild_permissions.administrator:
 		#await ctx.message.delete()
-        embed = discord.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
-        status = "ONLINE" if stats['status'] else "OFFLINE"
-        embed.add_field(name="Server Status", value = status)
-        embed.add_field(name="Player Count", value = stats['player_count'] + "/" + stats['max_players'])
-        
-        for key, value in stats['misc_stats'].items():
-            embed.add_field(name=key, value=value)
-            
-        embed.set_footer("Smurf Team Six LLC.")
-        await ctx.send(embed=embed)
-        
+		embed = discord.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
+		status = "ONLINE" if stats['status'] else "OFFLINE"
+		embed.add_field(name="Server Status", value = status)
+		embed.add_field(name="Player Count", value = stats['player_count'] + "/" + stats['max_players'])
+		
+		for key, value in stats['misc_stats'].items():
+			embed.add_field(name=key, value=value)
+			
+		embed.set_footer("Smurf Team Six LLC.")
+		await ctx.send(embed=embed)
+		
 ###############################################		 
-#			   HELPER FUNCTIONS			      #
+#			   HELPER FUNCTIONS				  #
 ###############################################
 #type = 'voice' or 'text'
 def get_channel(typ : str, chname : str) -> "Channel":
