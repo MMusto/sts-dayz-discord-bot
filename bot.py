@@ -134,7 +134,7 @@ async def force_update_stats(ctx):
 		else:
 			await ctx.send("Failed.")
 	else:
-		await ctx.send("Hey {}, You don't have permission to do tha.t".format(ctx.author.mention))
+		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 	
 @bot.command(pass_context=True)
 async def apicount(ctx):
@@ -143,7 +143,7 @@ async def apicount(ctx):
 		await ctx.message.delete()
 		await ctx.send(">>> # API Calls = {}".format(str(api_count)), delete_after=5.0)
 	else:
-		await ctx.send("Hey {}, You don't have permission to do tha.t".format(ctx.author.mention))
+		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 
 @bot.command(pass_context=True)
 async def stats(ctx):
@@ -161,12 +161,14 @@ async def stats(ctx):
 			
 		await ctx.send(embed=embed)
 	else:
-		await ctx.send("Hey {}, You don't have permission to do tha.t".format(ctx.author.mention))
+		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 		
 async def setgame(ctx, gam):
 	'''Modify game played by bot is friends list/status bar'''
 	if ctx.message.author.guild_permissions.administrator:
 		await bot.change_presence(activity=discord.Game(name=gam))
+    else:
+		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 		
 ###############################################		 
 #			   HELPER FUNCTIONS				  #
