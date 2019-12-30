@@ -1,4 +1,4 @@
-import os, asyncio, requests, hashlib
+import os, asyncio, requests, hashlib, discord
 from discord.ext import commands
 
 TOKEN = os.environ["TOKEN"]
@@ -135,7 +135,7 @@ async def stats(ctx):
 	global delay
 	if ctx.message.author.guild_permissions.administrator:
 		#await ctx.message.delete()
-		embed = discord.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
+		embed = bot.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
 		status = "ONLINE" if stats['status'] else "OFFLINE"
 		embed.add_field(name="Server Status", value = status)
 		embed.add_field(name="Player Count", value = stats['player_count'] + "/" + stats['max_players'])
