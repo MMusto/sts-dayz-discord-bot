@@ -2,7 +2,6 @@ import os, asyncio, requests, hashlib, discord
 from discord.ext import commands
 
 TOKEN = os.environ["TOKEN"]
-print(TOKEN, type(TOKEN))
 USER_AGENT	  = os.environ["USER_AGENT"]
 CLIENT_ID	   = os.environ["CLIENT_ID"]
 PLAIN_SECRET	= os.environ["PLAIN_SECRET"]
@@ -87,26 +86,10 @@ async def on_ready():
 
 async def updater():
 	global running
-	global api_count
-	global stats
 	global delay
 	running = True
 	
-	request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
-	if request.status_code != 200:
-		print('[!] Failed to log-in: {}'.format(request.json()))
-		sys.exit(1)
-	 
-	api_count += 1
-	
-	headers.update({
-		'Authorization': 'Bearer {}'.format(request.json().get('access_token'))
-	})
-
-	request = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
-	
-	stats = parse_data(request.json())
-	
+    await update_stats()
 	await update_channels()
 	
 	await asyncio.sleep(delay)
@@ -122,12 +105,40 @@ async def update_channels():
 	status = "ONLINE" if stats['status'] else "OFFLINE"
 	await current_status_channel.edit(name = "Current Status: {}".format(status))
 
+async def update_stats():
+	global api_count
+    global stats
+	request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
+	if request.status_code != 200:
+		print('[!] Failed to log-in: {}'.format(request.json()))
+		sys.exit(1)
+	 
+	api_count += 1
+	
+	headers.update({
+		'Authorization': 'Bearer {}'.format(request.json().get('access_token'))
+	})
+
+	request = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
+	stats = parse_data(request.json())
+	await update_channels()
+    
+@bot.command(pass_context=True)
+async def force_update_stats(ctx):
+	if ctx.message.author.guild_permissions.administrator:
+		await update_stats()
+        await update_channels()
+    else:
+        await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
+    
 @bot.command(pass_context=True)
 async def apicount(ctx):
 	global api_count
 	if ctx.message.author.guild_permissions.administrator:
 		await ctx.message.delete()
 		await ctx.send(">>> # API Calls = {}".format(str(api_count)), delete_after=5.0)
+    else:
+        await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
 
 @bot.command(pass_context=True)
 async def stats(ctx):
@@ -138,7 +149,7 @@ async def stats(ctx):
 		embed = discord.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
 		status = "ONLINE" if stats['status'] else "OFFLINE"
 		embed.add_field(name="Server Status", value = status)
-		embed.add_field(name="Player Count", value = stats['player_count'] + "/" + stats['max_players'])
+		embed.add_field(name="Player Count", value = "{}/{}".format(stats['player_count'], stats['max_players']))
 		
 		for key, value in stats['misc_stats'].items():
 			embed.add_field(name=key, value=value)
