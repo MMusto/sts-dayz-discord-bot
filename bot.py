@@ -25,6 +25,7 @@ bot = commands.Bot(command_prefix='.')
 running = False
 api_count = 0
 stats = None
+delay = 30
 
 
 def parse_data(data):
@@ -41,7 +42,7 @@ def parse_data(data):
 	results = dict()
 	
 	if data['results'] != 1:
-		print("[!] Error retrieving data.")
+		print("[!] Error retrieving data. (Results != 1)")
 		return -1
 
 	data = data['servers'][0]
@@ -88,6 +89,7 @@ async def updater():
 	global running
 	global api_count
 	global stats
+    global delay
 	running = True
 	
 	request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
@@ -107,7 +109,7 @@ async def updater():
 	
 	await update_channels()
 	
-	await asyncio.sleep(60)
+	await asyncio.sleep(delay)
 	await updater()
  
 async def update_channels():
@@ -123,12 +125,29 @@ async def update_channels():
 @bot.command(pass_context=True)
 async def apicount(ctx):
 	global api_count
-	if author.guild_permissions.move_members:
-		#await bot.delete_message(ctx.message)
+	if ctx.message.author.guild_permissions.administrator:
+		await ctx.message.delete()
 		await ctx.send(">>> # API Calls = {}".format(str(api_count)), delete_after=5.0)
-		
+
+@bot.command(pass_context=True)
+async def stats(ctx):
+	global stats
+    global delay
+	if ctx.message.author.guild_permissions.administrator:
+		#await ctx.message.delete()
+        embed = discord.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
+        status = "ONLINE" if stats['status'] else "OFFLINE"
+        embed.add_field(name="Server Status", value = status)
+        embed.add_field(name="Player Count", value = stats['player_count'] + "/" + stats['max_players'])
+        
+        for key, value in stats['misc_stats'].items():
+            embed.add_field(name=key, value=value)
+            
+        embed.set_footer("Smurf Team Six LLC.")
+        await ctx.send(embed=embed)
+        
 ###############################################		 
-#			   HELPER FUNCTIONS			  #
+#			   HELPER FUNCTIONS			      #
 ###############################################
 #type = 'voice' or 'text'
 def get_channel(typ : str, chname : str) -> "Channel":
