@@ -25,6 +25,7 @@ running = False
 api_count = 0
 stats = None
 delay = 30
+request = None
 
 
 def parse_data(data):
@@ -90,30 +91,41 @@ async def updater():
 	global delay
 	global stats
 	running = True
-	
-	await update_stats()
-	
-	await asyncio.sleep(delay)
-	await updater()
+	while True:
+		await update_stats()
+		await asyncio.sleep(delay)
 
 async def update_stats():
 	global api_count
 	global stats
-	request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
-	if request.status_code != 200:
-		print('[!] Failed to log-in: {}'.format(request.json()))
-		return False
-	 
-	api_count += 1
 	
-	headers.update({
-		'Authorization': 'Bearer {}'.format(request.json().get('access_token'))
-	})
+	data = get_data()
+	if (data):
+		stats = parse_data(data)
+		await update_channels()
+		api_count += 1
+	else:
+		print("Error getting data from API.")
 
-	request = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
-	stats = parse_data(request.json())
-	await update_channels()
 	return True
+   
+def get_data():
+	global request
+	global headers
+	if request == None:
+		request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
+		headers.update({
+			'Authorization': 'Bearer {}'.format(request.json().get('access_token'))
+		})
+		if request.status_code != 200:
+			print('[!] Failed to log-in: {}'.format(request.json()))
+			return False
+	response = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
+	if response.status_code == 200:
+		return response.json()
+	else:
+		response = None
+		return get_data()
  
 async def update_channels():
 	global stats
