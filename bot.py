@@ -89,25 +89,14 @@ async def updater():
 	global delay
 	running = True
 	
-    await update_stats()
-	await update_channels()
+	await update_stats()
 	
 	await asyncio.sleep(delay)
 	await updater()
- 
-async def update_channels():
-	global stats
-	players_online_channel = get_channel('voice', 'players online')
-	current_status_channel = get_channel('voice', 'current status')
-	if players_online_channel == None or current_status_channel == None:
-		print("Error: could not a stat channel")
-	await players_online_channel.edit(name = "Players Online: {}/{}".format(stats['player_count'], stats['max_players']))
-	status = "ONLINE" if stats['status'] else "OFFLINE"
-	await current_status_channel.edit(name = "Current Status: {}".format(status))
 
 async def update_stats():
 	global api_count
-    global stats
+	global stats
 	request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
 	if request.status_code != 200:
 		print('[!] Failed to log-in: {}'.format(request.json()))
@@ -122,23 +111,32 @@ async def update_stats():
 	request = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
 	stats = parse_data(request.json())
 	await update_channels()
-    
+ 
+async def update_channels():
+	global stats
+	players_online_channel = get_channel('voice', 'players online')
+	current_status_channel = get_channel('voice', 'current status')
+	if players_online_channel == None or current_status_channel == None:
+		print("Error: could not a stat channel")
+	await players_online_channel.edit(name = "Players Online: {}/{}".format(stats['player_count'], stats['max_players']))
+	status = "ONLINE" if stats['status'] else "OFFLINE"
+	await current_status_channel.edit(name = "Current Status: {}".format(status))
+	
 @bot.command(pass_context=True)
 async def force_update_stats(ctx):
 	if ctx.message.author.guild_permissions.administrator:
 		await update_stats()
-        await update_channels()
-    else:
-        await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
-    
+	else:
+		await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
+	
 @bot.command(pass_context=True)
 async def apicount(ctx):
 	global api_count
 	if ctx.message.author.guild_permissions.administrator:
 		await ctx.message.delete()
 		await ctx.send(">>> # API Calls = {}".format(str(api_count)), delete_after=5.0)
-    else:
-        await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
+	else:
+		await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
 
 @bot.command(pass_context=True)
 async def stats(ctx):
@@ -156,6 +154,8 @@ async def stats(ctx):
 			
 		embed.set_footer("Smurf Team Six LLC.")
 		await ctx.send(embed=embed)
+	else:
+		await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
 		
 ###############################################		 
 #			   HELPER FUNCTIONS				  #
