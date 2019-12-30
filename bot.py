@@ -151,8 +151,7 @@ async def stats(ctx):
 		
 		for key, value in stats['misc_stats'].items():
 			embed.add_field(name=key, value=value)
-			
-		embed.set_footer("Smurf Team Six LLC.")
+            
 		await ctx.send(embed=embed)
 	else:
 		await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
