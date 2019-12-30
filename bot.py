@@ -46,13 +46,13 @@ def parse_data(data):
 
 	data = data['servers'][0]
 
-	results['status'] = data['online'] #need to check if server is online before all of below?
+	results['status'] = data['online']
 
 	server = data['gameserver']
 
 	results['gametime'] = server['environment']['gametime']
 
-	results['player_count'] = server['players']
+	results['player_count'] = server['players'] if results['status'] else 0
 
 	results['max_players'] = server['max_players']
 
@@ -80,6 +80,7 @@ async def on_ready():
 	global running
 	print(bot.user.name)
 	print("**********THE BOT IS READY**********")
+	await bot.change_presence(game=discord.Game(name="Playing DayZ..."))
 	if not running:
 		await updater()
 		running = True
@@ -100,7 +101,7 @@ async def update_stats():
 	request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
 	if request.status_code != 200:
 		print('[!] Failed to log-in: {}'.format(request.json()))
-		sys.exit(1)
+		return False
 	 
 	api_count += 1
 	
@@ -111,6 +112,7 @@ async def update_stats():
 	request = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
 	stats = parse_data(request.json())
 	await update_channels()
+	return True
  
 async def update_channels():
 	global stats
@@ -125,7 +127,11 @@ async def update_channels():
 @bot.command(pass_context=True)
 async def force_update_stats(ctx):
 	if ctx.message.author.guild_permissions.administrator:
-		await update_stats()
+		success = await update_stats()
+		if success:
+			await ctx.send("Success.")
+		else:
+			await ctx.send("Failed.")
 	else:
 		await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
 	
@@ -151,10 +157,15 @@ async def stats(ctx):
 		
 		for key, value in stats['misc_stats'].items():
 			embed.add_field(name=key, value=value)
-            
+			
 		await ctx.send(embed=embed)
 	else:
 		await ctx.send("Hey {}, You don't have permission do do that".format(ctx.author.name))
+		
+async def setgame(ctx, gam):
+	'''Modify game played by bot is friends list/status bar'''
+	if ctx.message.author.guild_permissions.administrator:
+		await bot.change_presence(game=discord.Game(name=gam))
 		
 ###############################################		 
 #			   HELPER FUNCTIONS				  #
