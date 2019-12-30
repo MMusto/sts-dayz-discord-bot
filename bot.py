@@ -80,7 +80,7 @@ async def on_ready():
 	global running
 	print(bot.user.name)
 	print("**********THE BOT IS READY**********")
-	await bot.change_presence(status=discord.Status.dnd, activity=discord.Game("Playing DayZ..."))
+	await bot.change_presence(status=discord.Status.dnd, activity=discord.Game("Playing DayZ"))
 	if not running:
 		await updater()
 		running = True
@@ -88,6 +88,7 @@ async def on_ready():
 async def updater():
 	global running
 	global delay
+    global stats
 	running = True
 	
 	await update_stats()
