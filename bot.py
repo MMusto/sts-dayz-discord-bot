@@ -150,11 +150,11 @@ async def force_update_stats(ctx):
 		
 @bot.command(pass_context=True)
 async def mods(ctx):
-	global results
+	global stats
 	if ctx.message.author.guild_permissions.administrator:
-		if results.get('mod_count') and results.get('all_mods'):
-			embed = discord.Embed(title="Smurf Team Six DayZ Bot", description="Here's a list of all {} mods with links to their respective workshop.".format(results['mod_count']), color=0x09dee1)
-			for name, w_id in results['all_mods'].items():
+		if stats.get('mod_count') and stats.get('all_mods'):
+			embed = discord.Embed(title="Smurf Team Six DayZ Bot", description="Here's a list of all {} mods with links to their respective workshop.".format(stats['mod_count']), color=0x09dee1)
+			for name, w_id in stats['all_mods'].items():
 				embed.add_field(name=name, value='https://steamcommunity.com/sharedfiles/filedetails/?id={}'.format(w_id))
 		else:
 			await ctx.send("Hey {}, The mod list wasn't found. Go complain to Justin.".format(ctx.author.mention))
@@ -174,6 +174,7 @@ async def apicount(ctx):
 async def stats(ctx):
 	global stats
 	global delay
+    
 	if ctx.message.author.guild_permissions.administrator:
 		#await ctx.message.delete()
 		embed = discord.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
@@ -181,8 +182,8 @@ async def stats(ctx):
 		embed.add_field(name="Server Status", value = status)
 		embed.add_field(name="Player Count", value = "{}/{}".format(stats['player_count'], stats['max_players']))
 		
-		if results.get('mod_count') and results.get('all_mods'):
-			embed.add_field(name= "Mod Count", value = "{} (Use command .mods to see a detailed list of all mods)".format(results['mod_count']))
+		if stats.get('mod_count') and stats.get('all_mods'):
+			embed.add_field(name= "Mod Count", value = "{} (Use command .mods to see a detailed list of all mods)".format(stats['mod_count']))
 			
 		for key, value in stats['misc_stats'].items():
 			embed.add_field(name=key, value=value)
