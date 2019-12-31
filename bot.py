@@ -71,9 +71,9 @@ def parse_data(data):
 	
 	if mods['available']:
 		results['mod_count'] = mods['count']
-		results['all_mods'] = [mod_data['name'] for mod_data in mods['list']]
+		results['all_mods'] = {mod_data['name']:mod_data['steamWorkshopId'] for mod_data in mods['list']}
 	else:
-		print("[!] Error: mods not available.")
+		print("[!] Error: mods not available. mods['available'] = {}".format(mods['available']))
 	return results
 		
 @bot.event
@@ -147,6 +147,19 @@ async def force_update_stats(ctx):
 			await ctx.send("Failed.")
 	else:
 		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		
+@bot.command(pass_context=True)
+async def mods(ctx):
+	global results
+	if ctx.message.author.guild_permissions.administrator:
+		if results.get('mod_count') and results.get('all_mods'):
+			embed = discord.Embed(title="Smurf Team Six DayZ Bot", description="Here's a list of all {} mods with links to their respective workshop.".format(results['mod_count']), color=0x09dee1)
+			for name, w_id in results['all_mods'].items():
+				embed.add_field(name=name, value='https://steamcommunity.com/sharedfiles/filedetails/?id={}'.format(w_id))
+		else:
+			await ctx.send("Hey {}, The mod list wasn't found. Go complain to Justin.".format(ctx.author.mention))
+	else:
+		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 	
 @bot.command(pass_context=True)
 async def apicount(ctx):
@@ -168,8 +181,12 @@ async def stats(ctx):
 		embed.add_field(name="Server Status", value = status)
 		embed.add_field(name="Player Count", value = "{}/{}".format(stats['player_count'], stats['max_players']))
 		
+		if results.get('mod_count') and results.get('all_mods'):
+			embed.add_field(name= "Mod Count", value = "{} (Use command .mods to see a detailed list of all mods)".format(results['mod_count']))
+			
 		for key, value in stats['misc_stats'].items():
 			embed.add_field(name=key, value=value)
+		
 			
 		await ctx.send(embed=embed)
 	else:
