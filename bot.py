@@ -156,7 +156,7 @@ async def mods(ctx):
 			embed = discord.Embed(title="Smurf Team Six DayZ Bot", description="Here's a list of all {} mods with links to their respective workshop.".format(stats['mod_count']), color=0x09dee1)
 			for name, w_id in stats['all_mods'].items():
 				embed.add_field(name=name, value='https://steamcommunity.com/sharedfiles/filedetails/?id={}'.format(w_id))
-            await ctx.send(embed=embed)
+			await ctx.send(embed=embed)
 		else:
 			await ctx.send("Hey {}, The mod list wasn't found. Go complain to Justin.".format(ctx.author.mention))
 	else:
@@ -175,7 +175,7 @@ async def apicount(ctx):
 async def stats(ctx):
 	global stats
 	global delay
-    
+	
 	if ctx.message.author.guild_permissions.administrator:
 		#await ctx.message.delete()
 		embed = discord.Embed(title="Smurf Team Six DayZ Server", description="Stats are reset every {} seconds.".format(delay), color=0x09dee1)
