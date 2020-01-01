@@ -124,6 +124,7 @@ def get_data():
 	if response.status_code == 200:
 		return response.json()
 	else:
+		print("[!] Error getting data. Response Code = {}".format(response.status_code))
 		response = None
 		return get_data()
  
@@ -184,7 +185,7 @@ async def stats(ctx):
 		embed.add_field(name="Player Count", value = "{}/{}".format(stats['player_count'], stats['max_players']))
 		
 		if stats.get('mod_count') and stats.get('all_mods'):
-			embed.add_field(name= "Mod Count", value = "{} (Use command .mods to see a detailed list of all mods)".format(stats['mod_count']))
+			embed.add_field(name= "Mod Count", value = "{} (Type .mods for more)".format(stats['mod_count']))
 			
 		for key, value in stats['misc_stats'].items():
 			embed.add_field(name=key, value=value)
