@@ -112,7 +112,7 @@ async def update_stats():
 def get_data():
 	global request
 	global headers
-    if response == None:
+	if response == None:
 		request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
 		headers.update({
 			'Authorization': 'Bearer {}'.format(request.json().get('access_token'))
@@ -120,14 +120,14 @@ def get_data():
 		if request.status_code != 200:
 			print('[!] Failed to log-in: {}'.format(request.json()))
 			return False
-    try:
-        response = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print("[!] Error getting data (function get_data). Response Code = {}".format(response.status_code))
-            response = None
-            return get_data()
+	try:
+		response = requests.get('https://cfbackend.de/v1/servers/' + SERVER_IP + '/ataddress', headers=headers)
+		if response.status_code == 200:
+			return response.json()
+		else:
+			print("[!] Error getting data (function get_data). Response Code = {}".format(response.status_code))
+			response = None
+			return get_data()
  
 	except:
 		request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
