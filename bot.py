@@ -159,7 +159,7 @@ async def force_update_stats(ctx):
 		else:
 			await ctx.send("Failed.")
 	else:
-		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 		
 @bot.command(pass_context=True)
 async def mods(ctx):
@@ -173,7 +173,7 @@ async def mods(ctx):
 		else:
 			await ctx.send("Hey {}, The mod list wasn't found. Go complain to Justin.".format(ctx.author.mention))
 	else:
-		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 	
 @bot.command(pass_context=True)
 async def apicount(ctx):
@@ -182,7 +182,7 @@ async def apicount(ctx):
 		await ctx.message.delete()
 		await ctx.send(">>> # API Calls = {}".format(str(api_count)), delete_after=5.0)
 	else:
-		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 
 @bot.command(pass_context=True)
 async def stats(ctx):
@@ -205,7 +205,7 @@ async def stats(ctx):
 			
 		await ctx.send(embed=embed)
 	else:
-		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 		
 @bot.command(pass_context=True)	
 async def setgame(ctx, gam):
@@ -213,7 +213,7 @@ async def setgame(ctx, gam):
 	if ctx.message.author.guild_permissions.administrator:
 		await bot.change_presence(activity=discord.Game(name=gam))
 	else:
-		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 		
 @bot.command(pass_context=True)	
 async def error(ctx, person = None):
@@ -221,16 +221,68 @@ async def error(ctx, person = None):
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = 'there'
-		await ctx.send("Hey {}! Here's a solution: ```1. Closeout of the game.\n\2. Exit out of the DZSALauncher.\n\3. RESTART Steam!\n4. Try launching with LOAD instead of PLAY.```".format(person))
-		embed = discord.Embed(title="Hey {}! Here's a solution".format(person))
-		embed.add_field(value = "1. Closeout of the game.")
-		embed.add_field(value = "2. Exit out of the DZSALauncher.")
-		embed.add_field(value = "3. RESTART Steam!")
-		embed.add_field(value = "4. Try launching with LOAD instead of PLAY.")
-		await ctx.send(embed=embed)
+		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n\2. Exit out of the DZSALauncher.\n\3. RESTART Steam!\n4. Try launching with LOAD instead of PLAY.```".format(person))
 	else:
-		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+
+@bot.command(pass_context=True)	
+async def pbo(ctx, person = None):
+	'''When someone has a PBO error.'''
+	if ctx.message.author.guild_permissions.manage_messages:
+		if not person:
+			person = 'there'
+		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Open DZSALauncher and click\n the Mods tab.\n5. Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.\n6. Press LOAD not PLAY.```".format(person))
+	else:
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+
+@bot.command(pass_context=True)	
+async def ip(ctx, person = None):
+	'''When someone asks for IP.'''
+	if ctx.message.author.guild_permissions.manage_messages:
+		if not person:
+			person = ''
+		await ctx.send("Here's the server IP {} ```{}```".format(person,SERVER_IP))
+	else:
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 		
+@bot.command(pass_context=True)	
+async def pbo(ctx, person = None):
+	'''When someone has a PBO error.'''
+	if ctx.message.author.guild_permissions.manage_messages:
+		if not person:
+			person = 'there'
+		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Open DZSALauncher and click\n the Mods tab.\n5. Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.\n6. Press LOAD not PLAY.```".format(person))
+	else:
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+
+		
+@bot.command(pass_context=True)	
+async def name(ctx, person = None):
+	'''When players have issues joining because their name is "survivor" or some shit.'''
+	if ctx.message.author.guild_permissions.manage_messages:
+		if not person:
+			person = 'there'
+		await ctx.send("Hey {}! Here's a solution. ```1. Open DZSALauncher and go to 'Settings' located in the top right.\n2. Change your name under the 'In-Game Name' section.```".format(person))
+	else:
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+		
+@bot.command(pass_context=True)	
+async def join(ctx, person = None):
+	'''How to join our server.'''
+	if ctx.message.author.guild_permissions.manage_messages:
+		if not person:
+			person = 'there'
+		
+		embed = discord.Embed(title="How to Join Our Server", description="Hey {}! Here's how you join.".format(sperson), inline = False, color=0x09dee1)
+		embed.add_field(name = "Step 1", value = "Download DZSALauncher: https://dayzsalauncher.com/#/home")
+		embed.add_field(name = "Step 2", value = "Search 'Smurf Team Six' in the FILTERS box, located in the TOP LEFT.)")
+		embed.add_field(name = "Step 3", value = "Press the TRIANGLE PLAY button, and DZSALauncher will download ALL the required mods.")
+		embed.add_field(name = "Step 4", value = "Read the #📚server-rules  tab.")
+		embed.add_field(name = "Step 5", value = "Check out the important keybindings here: #💭server-info ")
+		
+		await ctx.send(embed = embed)
+	else:
+		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 ###############################################		 
 #			   HELPER FUNCTIONS				  #
 ###############################################
