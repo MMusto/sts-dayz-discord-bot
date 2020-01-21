@@ -246,17 +246,6 @@ async def ip(ctx, person = None):
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 		
 @bot.command(pass_context=True)	
-async def pbo(ctx, person = None):
-	'''When someone has a PBO error.'''
-	if ctx.message.author.guild_permissions.manage_messages:
-		if not person:
-			person = 'there'
-		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Open DZSALauncher and click\n the Mods tab.\n5. Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.\n6. Press LOAD not PLAY.```".format(person))
-	else:
-		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
-
-		
-@bot.command(pass_context=True)	
 async def name(ctx, person = None):
 	'''When players have issues joining because their name is "survivor" or some shit.'''
 	if ctx.message.author.guild_permissions.manage_messages:
