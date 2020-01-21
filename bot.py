@@ -218,11 +218,18 @@ async def setgame(ctx, gam):
 		
 @bot.command(pass_context=True)	
 async def error(ctx, person = None):
-	'''Geberal solution for error while joining the server.'''
+	'''General solution for error while joining the server.'''
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = 'there'
-		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Try launching with LOAD instead of PLAY.```".format(person))
+		
+		embed = discord.Embed(title="PBO Error Fix", description="Hey {}! Try this!".format(person), inline = True, color=0x09dee1)
+		embed.add_field(name = "Step 1", value = "Closeout of the game.", inline = False)
+		embed.add_field(name = "Step 2", value = "Exit out of the DZSALauncher.", inline = False)
+		embed.add_field(name = "Step 3", value = "RESTART Steam!", inline = False)
+		embed.add_field(name = "Step 4", value = "Try launching with LOAD instead of PLAY.", inline = False)
+		
+		await ctx.send(embed=embed)
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 	await ctx.message.delete()
@@ -233,7 +240,16 @@ async def pbo(ctx, person = None):
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = 'there'
-		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Open DZSALauncher and click the Mods tab.\n5. Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.\n6. Press LOAD not PLAY.```".format(person))
+		
+		embed = discord.Embed(title="PBO Error Fix", description="Hey {}!\nHere's how you fix a pbo error.".format(person), inline = True, color=0x09dee1)
+		embed.add_field(name = "Step 1", value = "Closeout of the game.", inline = False)
+		embed.add_field(name = "Step 2", value = "Exit out of the DZSALauncher.", inline = False)
+		embed.add_field(name = "Step 3", value = "RESTART Steam!", inline = False)
+		embed.add_field(name = "Step 4", value = "Open DZSALauncher and click the Mods tab.", inline = False)
+		embed.add_field(name = "Step 5", value = "Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.", inline = False)
+		embed.add_field(name = "Step 5", value = "Try launching with LOAD instead of PLAY.", inline = False)
+		
+		await ctx.send(embed=embed)
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 	await ctx.message.delete()
@@ -244,7 +260,7 @@ async def ip(ctx, person = None):
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = ''
-		await ctx.send("Here's the server IP {} ```{}```".format(person,SERVER_IP))
+		await ctx.send("Here's the server IP {}\n>>> {}".format(person,SERVER_IP))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 	await ctx.message.delete()
@@ -255,10 +271,14 @@ async def name(ctx, person = None):
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = 'there'
-		await ctx.send("Hey {}! Here's a solution. ```1. Open DZSALauncher and go to 'Settings' located in the top right.\n2. Change your name under the 'In-Game Name' section.```".format(person))
+		
+		embed = discord.Embed(title="How to Change Your Name", description="Hey {}!\nHere's how you change your name.".format(person), inline = True, color=0x09dee1)
+		embed.add_field(name = "Step 1", value = "Open DZSALauncher and go to 'Settings' located in the top right.", inline = False)
+		embed.add_field(name = "Step 2", value = "Change your name under the 'In-Game Name' section.", inline = False)
+		
+		await ctx.send(embed = embed)
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
-	await ctx.message.delete()
 	await ctx.message.delete()
 		
 @bot.command(pass_context=True)	
@@ -275,9 +295,9 @@ async def join(ctx, person = None):
 		if info:
 			info = info.mention
 		
-		embed = discord.Embed(title="How to Join Our Server", description="Hey {}! Here's how you join.".format(person), inline = True, color=0x09dee1)
+		embed = discord.Embed(title="How to Join Our Server", description="Hey {}!\nHere's how you join.".format(person), inline = True, color=0x09dee1)
 		embed.add_field(name = "Step 1", value = "Download DZSALauncher: https://dayzsalauncher.com/#/home", inline = False)
-		embed.add_field(name = "Step 2", value = "Search 'Smurf Team Six' in the FILTERS box, located in the TOP LEFT.)", inline = False)
+		embed.add_field(name = "Step 2", value = "Search 'Smurf Team Six' in the FILTERS box, located in the TOP LEFT.", inline = False)
 		embed.add_field(name = "Step 3", value = "Press the TRIANGLE PLAY button, and DZSALauncher will download ALL the required mods.", inline = False)
 		embed.add_field(name = "Step 4", value = "Read the {}  tab.".format(rules), inline = False)
 		embed.add_field(name = "Step 5", value = "Check out the important keybindings here: {}".format(info), inline = False)
