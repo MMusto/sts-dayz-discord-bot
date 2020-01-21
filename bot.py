@@ -207,10 +207,23 @@ async def stats(ctx):
 	else:
 		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 		
+@bot.command(pass_context=True)	
 async def setgame(ctx, gam):
 	'''Modify game played by bot is friends list/status bar'''
 	if ctx.message.author.guild_permissions.administrator:
 		await bot.change_presence(activity=discord.Game(name=gam))
+	else:
+		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
+		
+@bot.command(pass_context=True)	
+async def error(ctx, person = None):
+	'''Geberal solution for error while joining the server.'''
+	if ctx.message.author.guild_permissions.manage_messages:
+		if person:
+		await ctx.send("Hey {} here's a solution: ```1.  Closeout of the game. \
+2.  Exit out of the DZSALauncher. \
+3.  RESTART Steam! \
+4.  Press LOAD not PLAY.```".format(person))
 	else:
 		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 		
