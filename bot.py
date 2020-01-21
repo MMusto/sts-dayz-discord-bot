@@ -220,7 +220,7 @@ async def error(ctx, person = None):
 	'''Geberal solution for error while joining the server.'''
 	if ctx.message.author.guild_permissions.manage_messages:
 		if person:
-		await ctx.send("Hey {} here's a solution: ```1.  Closeout of the game. \
+			await ctx.send("Hey {} here's a solution: ```1.  Closeout of the game. \
 2.  Exit out of the DZSALauncher. \
 3.  RESTART Steam! \
 4.  Press LOAD not PLAY.```".format(person))
