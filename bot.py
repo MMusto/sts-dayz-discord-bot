@@ -221,7 +221,7 @@ async def error(ctx, person = None):
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = 'there'
-		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n\2. Exit out of the DZSALauncher.\n\3. RESTART Steam!\n4. Try launching with LOAD instead of PLAY.```".format(person))
+		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Try launching with LOAD instead of PLAY.```".format(person))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 
@@ -231,7 +231,7 @@ async def pbo(ctx, person = None):
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = 'there'
-		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Open DZSALauncher and click\n the Mods tab.\n5. Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.\n6. Press LOAD not PLAY.```".format(person))
+		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Open DZSALauncher and click the Mods tab.\n5. Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.\n6. Press LOAD not PLAY.```".format(person))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
 
@@ -262,7 +262,7 @@ async def join(ctx, person = None):
 		if not person:
 			person = 'there'
 		
-		embed = discord.Embed(title="How to Join Our Server", description="Hey {}! Here's how you join.".format(sperson), inline = False, color=0x09dee1)
+		embed = discord.Embed(title="How to Join Our Server", description="Hey {}! Here's how you join.".format(person), inline = False, color=0x09dee1)
 		embed.add_field(name = "Step 1", value = "Download DZSALauncher: https://dayzsalauncher.com/#/home")
 		embed.add_field(name = "Step 2", value = "Search 'Smurf Team Six' in the FILTERS box, located in the TOP LEFT.)")
 		embed.add_field(name = "Step 3", value = "Press the TRIANGLE PLAY button, and DZSALauncher will download ALL the required mods.")
