@@ -221,15 +221,13 @@ async def error(ctx, person = None):
 	if ctx.message.author.guild_permissions.manage_messages:
 		if not person:
 			person = 'there'
-		await ctx.send("Hey {}! Here's a solution: ```1. Closeout of the game.\n \
-2. Exit out of the DZSALauncher.\n \
-3. RESTART Steam!\n \
-4. Try launching with LOAD instead of PLAY.```".format(person))
+		await ctx.send("Hey {}! Here's a solution: ```1. Closeout of the game.\n\2. Exit out of the DZSALauncher.\n\3. RESTART Steam!\n4. Try launching with LOAD instead of PLAY.```".format(person))
 		embed = discord.Embed(title="Hey {}! Here's a solution".format(person))
 		embed.add_field(value = "1. Closeout of the game.")
 		embed.add_field(value = "2. Exit out of the DZSALauncher.")
 		embed.add_field(value = "3. RESTART Steam!")
 		embed.add_field(value = "4. Try launching with LOAD instead of PLAY.")
+		await ctx.send(embed=embed)
 	else:
 		await ctx.send("Hey {}, You don't have permission to do that.".format(ctx.author.mention))
 		
