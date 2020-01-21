@@ -214,6 +214,7 @@ async def setgame(ctx, gam):
 		await bot.change_presence(activity=discord.Game(name=gam))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+	await ctx.message.delete()
 		
 @bot.command(pass_context=True)	
 async def error(ctx, person = None):
@@ -224,6 +225,7 @@ async def error(ctx, person = None):
 		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Try launching with LOAD instead of PLAY.```".format(person))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+	await ctx.message.delete()
 
 @bot.command(pass_context=True)	
 async def pbo(ctx, person = None):
@@ -234,6 +236,7 @@ async def pbo(ctx, person = None):
 		await ctx.send("Hey {}! Try this! ```1. Closeout of the game.\n2. Exit out of the DZSALauncher.\n3. RESTART Steam!\n4. Open DZSALauncher and click the Mods tab.\n5. Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.\n6. Press LOAD not PLAY.```".format(person))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+	await ctx.message.delete()
 
 @bot.command(pass_context=True)	
 async def ip(ctx, person = None):
@@ -244,6 +247,7 @@ async def ip(ctx, person = None):
 		await ctx.send("Here's the server IP {} ```{}```".format(person,SERVER_IP))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+	await ctx.message.delete()
 		
 @bot.command(pass_context=True)	
 async def name(ctx, person = None):
@@ -254,6 +258,8 @@ async def name(ctx, person = None):
 		await ctx.send("Hey {}! Here's a solution. ```1. Open DZSALauncher and go to 'Settings' located in the top right.\n2. Change your name under the 'In-Game Name' section.```".format(person))
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+	await ctx.message.delete()
+	await ctx.message.delete()
 		
 @bot.command(pass_context=True)	
 async def join(ctx, person = None):
@@ -262,10 +268,10 @@ async def join(ctx, person = None):
 		if not person:
 			person = 'there'
 		
-		rules = get_channel(str, "rules")
+		rules = get_channel("text", "rules")
 		if rules:
 			rules = rules.mention
-		info  = get_channel(str, "info")
+		info  = get_channel("text", "info")
 		if info:
 			info = info.mention
 		
@@ -279,6 +285,7 @@ async def join(ctx, person = None):
 		await ctx.send(embed = embed)
 	else:
 		await ctx.send("Sorry {}, You don't have permission to do that.".format(ctx.author.mention))
+	await ctx.message.delete()
 ###############################################		 
 #			   HELPER FUNCTIONS				  #
 ###############################################
