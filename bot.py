@@ -5,7 +5,7 @@ TOKEN = os.environ["TOKEN"]
 USER_AGENT	  = os.environ["USER_AGENT"]
 CLIENT_ID	   = os.environ["CLIENT_ID"]
 PLAIN_SECRET	= os.environ["PLAIN_SECRET"]
-SERVER_IP		= '35.245.115.144'
+SERVER_IP		= '35.245.43.226'
 
 HASHED_SECRET   = hashlib.sha256(PLAIN_SECRET.encode('utf-8')).hexdigest()
 
@@ -140,6 +140,7 @@ def get_data():
 			print('[!] Failed to log-in: {}'.format(request.json()))
 			return False
 		return get_data()
+		
 async def update_channels():
 	global stats
 	players_online_channel = get_channel('voice', 'players online')
