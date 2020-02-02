@@ -5,7 +5,7 @@ TOKEN = os.environ["TOKEN"]
 USER_AGENT	  = os.environ["USER_AGENT"]
 CLIENT_ID	   = os.environ["CLIENT_ID"]
 PLAIN_SECRET	= os.environ["PLAIN_SECRET"]
-SERVER_IP		= '35.245.43.226'
+SERVER_IP		= '35.236.220.155'
 
 HASHED_SECRET   = hashlib.sha256(PLAIN_SECRET.encode('utf-8')).hexdigest()
 
