@@ -253,7 +253,7 @@ async def pbo(ctx, person = None):
 		embed.add_field(name = "Step 3", value = "RESTART Steam!", inline = False)
 		embed.add_field(name = "Step 4", value = "Open DZSALauncher and click the Mods tab.", inline = False)
 		embed.add_field(name = "Step 5", value = "Locate mod associated with the PBO error, and press the refresh symbol while Steam is open.", inline = False)
-		embed.add_field(name = "Step 5", value = "Try launching with LOAD instead of PLAY.", inline = False)
+		embed.add_field(name = "Step 6", value = "Try launching with LOAD instead of PLAY.", inline = False)
 		
 		await ctx.send(embed=embed)
 	else:
