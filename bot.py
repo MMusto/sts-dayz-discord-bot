@@ -13,6 +13,10 @@ headers = {
 	'User-Agent': USER_AGENT,
 	'Client-ID': CLIENT_ID
 }
+orig_headers = {
+	'User-Agent': USER_AGENT,
+	'Client-ID': CLIENT_ID
+}
 
 payload = {
 	'secret': HASHED_SECRET
@@ -81,7 +85,7 @@ async def on_ready():
 	global running
 	print(bot.user.name)
 	print("**********THE BOT IS READY**********")
-	await bot.change_presence(status=discord.Status.dnd, activity=discord.Game("Playing DayZ"))
+	await bot.change_presence(status=discord.Status.dnd, activity=discord.Game("DayZ"))
 	if not running:
 		await updater()
 		running = True
@@ -112,8 +116,9 @@ async def update_stats():
 def get_data():
 	global request
 	global headers
+	global orig_headers
 	if request == None:
-		request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
+		request = requests.post('https://cfbackend.de/auth/login', headers=orig_headers, json=payload)
 		headers.update({
 			'Authorization': 'Bearer {}'.format(request.json().get('access_token'))
 		})
@@ -132,7 +137,7 @@ def get_data():
 			return get_data()
  
 	except:
-		request = requests.post('https://cfbackend.de/auth/login', headers=headers, json=payload)
+		request = requests.post('https://cfbackend.de/auth/login', headers=orig_headers, json=payload)
 		headers.update({
 			'Authorization': 'Bearer {}'.format(request.json().get('access_token'))
 		})
