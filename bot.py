@@ -2,8 +2,8 @@ import os, asyncio, requests, hashlib, discord
 from discord.ext import commands
 
 TOKEN = os.environ["TOKEN"]
-USER_AGENT	  = os.environ["USER_AGENT"]
-CLIENT_ID	   = os.environ["CLIENT_ID"]
+USER_AGENT	    = os.environ["USER_AGENT"]
+CLIENT_ID	    = os.environ["CLIENT_ID"]
 PLAIN_SECRET	= os.environ["PLAIN_SECRET"]
 SERVER_IP		= '35.236.220.155'
 
@@ -318,8 +318,9 @@ async def join(ctx, person = None):
 #type = 'voice' or 'text'
 def get_channel(typ : str, chname : str) -> "Channel":
 	'''Helper function that returns Channel object from name snippet'''
+	server_name = "DayZ"
 	for server in bot.guilds:
-		if "DayZ" in server.name:
+		if server_name in server.name:
 			for channel in server.channels:
 					if(str(channel.type) == typ):
 							if(chname.lower() in channel.name.lower()):
